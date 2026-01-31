@@ -4,6 +4,9 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     launchGame()
 })
+function loadScene (scene2: string) {
+	
+}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("left")
 })
@@ -58,11 +61,12 @@ let gameOffsetTop = 0
 let gameImages: Image[] = []
 let rowHeight = 0
 let currentRow = 0
+let currentScene = "menu"
 rowHeight = 40
 gameImages = [assets.image`PaddleIcon`, assets.image`StarIcon`, assets.image`SyncTheBoat`]
 let gameAnimations = [spriteutils.nullConsts(spriteutils.NullConsts.Undefined), assets.animation`Super Star Story`, spriteutils.nullConsts(spriteutils.NullConsts.Undefined)]
 let gameNames = ["Paddle-the-River", "Star", "SyncTheBoat"]
-gameOffsetTop = 10
+gameOffsetTop = 40
 leftColumnLeft = 15
 rightColumnLeft = 85
 numberOfRows = Math.ceil(gameImages.length / 2)
@@ -71,3 +75,4 @@ let gameWidth = 60
 selection = sprites.create(assets.image`selector`, SpriteKind.Player)
 selection.z = 10
 selection.setPosition(leftColumnLeft + gameWidth / 2, rowHeight * 0 + gameOffsetTop + 17)
+let MakeLogo = sprites.create(assets.image`MadeArcadeLogo`, SpriteKind.Player)
