@@ -16,13 +16,13 @@ function loadScene () {
         sprites.destroy(tSprite)
     }
     if (currentScene == "menu") {
-        tempSprite = sprites.create(img`
+        logoSprite = sprites.create(img`
             . 
             `, SpriteKind.Food)
-        tempSprite.x = 16
-        tempSprite.y = 5
+        logoSprite.x = 16
+        logoSprite.y = 5
         animation.runImageAnimation(
-        tempSprite,
+            logoSprite,
         assets.animation`MadeLogoAnim`,
         500,
         true
@@ -39,13 +39,13 @@ function loadScene () {
     } else if (currentScene == "title") {
         sceneStartTime = game.runtime()
         sceneChangeTime = 60000
-        tempSprite = sprites.create(img`
+        logoSprite = sprites.create(img`
             . 
             `, SpriteKind.Food)
-        tempSprite.x = 16
-        tempSprite.y = 10
+        logoSprite.x = 16
+        logoSprite.y = 10
         animation.runImageAnimation(
-        tempSprite,
+            logoSprite,
         assets.animation`MadeLogoAnim`,
         200,
         true
@@ -83,7 +83,6 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("down")
 })
 function launchGame () {
-    console.log(gameNames[currentRow * 2])
     if (selection.x - selection.width / 2 == leftColumnLeft && gameNames[currentRow * 2] != undefined) {
         music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
         console.logValue("Launching game!!", gameNames[currentRow * 2])
@@ -112,6 +111,7 @@ function moveSelection (direction: string) {
     }
     lastButtonPress = game.runtime()
     currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
+    sprites.destroy(gameAnimationSprite)
     if (direction == "up" && currentRow > 0) {
         selection.y = selection.y - rowHeight
         currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
@@ -128,6 +128,19 @@ function moveSelection (direction: string) {
         selection.x = rightColumnLeft + selection.width / 2
     } else if (direction == "left" && selection.x - selection.width / 2 > leftColumnLeft - selection.width / 2) {
         selection.x = leftColumnLeft + selection.width / 2
+    }
+
+    // And now play the animation that may come with it
+    if (selection.x - selection.width / 2 == leftColumnLeft && gameAnimations[currentRow * 2]) {
+        gameAnimationSprite = sprites.create(img`.`, SpriteKind.Food)
+        gameAnimationSprite.z = 5
+        gameAnimationSprite.setPosition(selection.x, selection.y)
+        animation.runImageAnimation(gameAnimationSprite, gameAnimations[currentRow * 2], 200, true)
+    } else if (selection.x - selection.width / 2 == rightColumnLeft && gameAnimations[currentRow * 2 + 1]) {
+        gameAnimationSprite = sprites.create(img`.`, SpriteKind.Food)
+        gameAnimationSprite.z = 5
+        gameAnimationSprite.setPosition(selection.x - 29, selection.y - 16)
+        animation.runImageAnimation(gameAnimationSprite, gameAnimations[currentRow * 2 + 1], 200, true)
     }
 }
 let tempFoundGame = 0
@@ -147,7 +160,9 @@ let currentScene = ""
 let blurbTwo: string[] = []
 let blurbOne: string[] = []
 let textSprites: Sprite[] = []
+let logoSprite: Sprite = null
 let tempSprite: Sprite = null
+let gameAnimationSprite: Sprite = null
 let tempXpos = 0
 let actualGameList: string[] = []
 let gameNames: string[] = []
@@ -182,7 +197,7 @@ assets.image`StarIcon`,
 assets.image`SyncTheBoat`,
 assets.image`YourGameIcon`
 ]
-let gameAnimations = ["", assets.animation`Super Star Story`, ""]
+let gameAnimations = [undefined, assets.animation`Super Star Story`, undefined]
 gameNames = ["Paddle-the-River", "Super-Star-Story", "SyncTheBoat"]
 gameOffsetTop = 40
 leftColumnLeft = 15
