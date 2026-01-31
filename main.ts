@@ -83,10 +83,10 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("down")
 })
 function launchGame () {
-    if (selection.x - selection.width / 2 == leftColumnLeft) {
-        console.logValue("Launching game!", gameNames[currentRow * 2])
+    if (selection.x - selection.width / 2 == leftColumnLeft && gameNames[currentRow * 2] != undefined) {
+        console.logValue("Launching game!!", gameNames[currentRow * 2])
         control.runProgram(gameNames[currentRow * 2])
-    } else {
+    } else if (gameNames[currentRow * 2 + 1] != undefined) {
         console.logValue("Launching game!", gameNames[currentRow * 2 + 1])
         control.runProgram(gameNames[currentRow * 2 + 1])
     }
@@ -115,15 +115,18 @@ function moveSelection (direction: string) {
         selection.x = leftColumnLeft + selection.width / 2
     }
 }
+let currentRow = 0
 let tempTextSprite: TextSprite = null
 let sceneChangeTime = 0
 let sceneStartTime = 0
 let selection: Sprite = null
+let lastButtonPress = 0
 let gameWidth = 0
 let numberOfRows = 0
 let rightColumnLeft = 0
 let leftColumnLeft = 0
 let gameOffsetTop = 0
+let gameNames: string[] = []
 let gameImages: Image[] = []
 let rowHeight = 0
 let currentScene = ""
@@ -132,9 +135,6 @@ let blurbOne: string[] = []
 let textSprites: Sprite[] = []
 let tempSprite: Sprite = null
 let tempXpos = 0
-let gameNames: string[] = []
-let currentRow = 0
-let lastButtonPress: number = 0
 tempSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -158,7 +158,12 @@ blurbOne = ["These games were created", "by students of the", "\"Make Video Game
 blurbTwo = ["Sign up today!"]
 currentScene = "title"
 rowHeight = 38
-gameImages = [assets.image`PaddleIcon`, assets.image`StarIcon`, assets.image`SyncTheBoat`]
+gameImages = [
+assets.image`PaddleIcon`,
+assets.image`StarIcon`,
+assets.image`SyncTheBoat`,
+assets.image`YourGameIcon`
+]
 let gameAnimations = [spriteutils.nullConsts(spriteutils.NullConsts.Undefined), assets.animation`Super Star Story`, spriteutils.nullConsts(spriteutils.NullConsts.Undefined)]
 gameNames = ["Paddle-the-River", "Star", "SyncTheBoat"]
 gameOffsetTop = 40
@@ -168,13 +173,12 @@ numberOfRows = Math.ceil(gameImages.length / 2)
 let gameHeight = 34
 gameWidth = 60
 loadScene()
-
-game.onUpdateInterval(1000, function() {
-    if (currentScene == 'title' && game.runtime() - sceneStartTime > sceneChangeTime) {
-        currentScene = 'menu'
+game.onUpdateInterval(1000, function () {
+    if (currentScene == "title" && game.runtime() - sceneStartTime > sceneChangeTime) {
+        currentScene = "menu"
         loadScene()
-    } else if (currentScene == 'menu' && game.runtime() - lastButtonPress > 30000) {
-        currentScene = 'title'
+    } else if (currentScene == "menu" && game.runtime() - lastButtonPress > 30000) {
+        currentScene = "title"
         loadScene()
     }
 })
