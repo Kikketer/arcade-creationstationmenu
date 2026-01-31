@@ -22,7 +22,7 @@ function loadScene () {
         logoSprite.x = 16
         logoSprite.y = 5
         animation.runImageAnimation(
-            logoSprite,
+        logoSprite,
         assets.animation`MadeLogoAnim`,
         500,
         true
@@ -45,7 +45,7 @@ function loadScene () {
         logoSprite.x = 16
         logoSprite.y = 10
         animation.runImageAnimation(
-            logoSprite,
+        logoSprite,
         assets.animation`MadeLogoAnim`,
         200,
         true
@@ -97,9 +97,8 @@ function launchGame () {
 }
 function validateGames () {
     actualGameList = control.programList()
-    for (let gli = 0; gli <= gameNames.length - 1; gli++) {
+for (let gli = 0; gli <= gameNames.length - 1; gli++) {
         tempFoundGame = actualGameList.indexOf(gameNames[gli])
-        console.log(`Found? ${tempFoundGame}`)
         if (tempFoundGame < 0) {
             gameNames[gli] = undefined
         }
@@ -129,46 +128,58 @@ function moveSelection (direction: string) {
     } else if (direction == "left" && selection.x - selection.width / 2 > leftColumnLeft - selection.width / 2) {
         selection.x = leftColumnLeft + selection.width / 2
     }
-
-    // And now play the animation that may come with it
     if (selection.x - selection.width / 2 == leftColumnLeft && gameAnimations[currentRow * 2]) {
-        gameAnimationSprite = sprites.create(img`.`, SpriteKind.Food)
-        gameAnimationSprite.z = 5
-        gameAnimationSprite.setPosition(selection.x, selection.y)
-        animation.runImageAnimation(gameAnimationSprite, gameAnimations[currentRow * 2], 200, true)
-    } else if (selection.x - selection.width / 2 == rightColumnLeft && gameAnimations[currentRow * 2 + 1]) {
-        gameAnimationSprite = sprites.create(img`.`, SpriteKind.Food)
+        gameAnimationSprite = sprites.create(img`
+            . 
+            `, SpriteKind.Food)
         gameAnimationSprite.z = 5
         gameAnimationSprite.setPosition(selection.x - 29, selection.y - 16)
-        animation.runImageAnimation(gameAnimationSprite, gameAnimations[currentRow * 2 + 1], 200, true)
+        animation.runImageAnimation(
+        gameAnimationSprite,
+        gameAnimations[currentRow * 2],
+        200,
+        true
+        )
+    } else if (selection.x - selection.width / 2 == rightColumnLeft && gameAnimations[currentRow * 2 + 1]) {
+        gameAnimationSprite = sprites.create(img`
+            . 
+            `, SpriteKind.Food)
+        gameAnimationSprite.z = 5
+        gameAnimationSprite.setPosition(selection.x - 29, selection.y - 16)
+        animation.runImageAnimation(
+        gameAnimationSprite,
+        gameAnimations[currentRow * 2 + 1],
+        200,
+        true
+        )
     }
 }
-let tempFoundGame = 0
+let gameAnimationSprite: Sprite = null
 let tempTextSprite: TextSprite = null
 let sceneChangeTime = 0
 let sceneStartTime = 0
 let selection: Sprite = null
+let logoSprite: Sprite = null
 let lastButtonPress = 0
 let gameWidth = 0
 let numberOfRows = 0
 let rightColumnLeft = 0
 let leftColumnLeft = 0
 let gameOffsetTop = 0
+let gameAnimations: Image[][] = []
 let gameImages: Image[] = []
 let rowHeight = 0
 let currentScene = ""
 let blurbTwo: string[] = []
 let blurbOne: string[] = []
 let textSprites: Sprite[] = []
-let logoSprite: Sprite = null
-let tempSprite: Sprite = null
-let gameAnimationSprite: Sprite = null
-let tempXpos = 0
-let actualGameList: string[] = []
-let gameNames: string[] = []
 let currentRow = 0
+let gameNames: string[] = []
+let actualGameList: string[] = []
+let tempXpos = 0
+let tempFoundGame = 0
 actualGameList = [""]
-tempSprite = sprites.create(img`
+let tempSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -195,10 +206,20 @@ gameImages = [
 assets.image`PaddleIcon`,
 assets.image`StarIcon`,
 assets.image`SyncTheBoat`,
-assets.image`YourGameIcon`
+assets.image`SpoopIcon`
 ]
-let gameAnimations = [undefined, assets.animation`Super Star Story`, undefined]
-gameNames = ["Paddle-the-River", "Super-Star-Story", "SyncTheBoat"]
+gameAnimations = [
+[assets.image`PaddleIcon`],
+assets.animation`Super Star Story`,
+[assets.image`SyncTheBoat`],
+[assets.image`SpoopIcon`]
+]
+gameNames = [
+"Paddle-the-River",
+"Super-Star-Story",
+"SyncTheBoat",
+"Spoop"
+]
 gameOffsetTop = 40
 leftColumnLeft = 15
 rightColumnLeft = 85
