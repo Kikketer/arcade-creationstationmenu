@@ -11,6 +11,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function loadScene () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+    lastButtonPress = game.runtime()
     for (let tSprite of textSprites) {
         sprites.destroy(tSprite)
     }
@@ -26,11 +27,18 @@ function loadScene () {
         500,
         true
         )
-        selection = sprites.create(assets.image`selector`, SpriteKind.Player)
+        selection = sprites.create(assets.image`selector`, SpriteKind.Food)
         selection.z = 10
         selection.setPosition(leftColumnLeft + gameWidth / 2, rowHeight * 0 + gameOffsetTop + 17)
-        animation.runImageAnimation(selection, assets.animation`selectionAnim`, 200, true)
+        animation.runImageAnimation(
+        selection,
+        assets.animation`selectionAnim`,
+        200,
+        true
+        )
     } else if (currentScene == "title") {
+        sceneStartTime = game.runtime()
+        sceneChangeTime = 180000
         tempSprite = sprites.create(img`
             . 
             `, SpriteKind.Food)
@@ -87,6 +95,7 @@ function moveSelection (direction: string) {
     if (currentScene != "menu") {
         return
     }
+    lastButtonPress = game.runtime()
     currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
     if (direction == "up" && currentRow > 0) {
         selection.y = selection.y - rowHeight
@@ -107,6 +116,8 @@ function moveSelection (direction: string) {
     }
 }
 let tempTextSprite: TextSprite = null
+let sceneChangeTime = 0
+let sceneStartTime = 0
 let selection: Sprite = null
 let gameWidth = 0
 let numberOfRows = 0
@@ -120,9 +131,10 @@ let blurbTwo: string[] = []
 let blurbOne: string[] = []
 let textSprites: Sprite[] = []
 let tempSprite: Sprite = null
-let currentRow = 0
+let tempXpos = 0
 let gameNames: string[] = []
-let tempXpos: number = 0
+let currentRow = 0
+let lastButtonPress: number = 0
 tempSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -156,3 +168,13 @@ numberOfRows = Math.ceil(gameImages.length / 2)
 let gameHeight = 34
 gameWidth = 60
 loadScene()
+
+game.onUpdateInterval(1000, function() {
+    if (currentScene == 'title' && game.runtime() - sceneStartTime > sceneChangeTime) {
+        currentScene = 'menu'
+        loadScene()
+    } else if (currentScene == 'menu' && game.runtime() - lastButtonPress > 30000) {
+        currentScene = 'title'
+        loadScene()
+    }
+})
