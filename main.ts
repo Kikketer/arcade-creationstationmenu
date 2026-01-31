@@ -38,7 +38,7 @@ function loadScene () {
         )
     } else if (currentScene == "title") {
         sceneStartTime = game.runtime()
-        sceneChangeTime = 180000
+        sceneChangeTime = 60000
         tempSprite = sprites.create(img`
             . 
             `, SpriteKind.Food)
@@ -83,12 +83,27 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("down")
 })
 function launchGame () {
+    console.log(gameNames[currentRow * 2])
     if (selection.x - selection.width / 2 == leftColumnLeft && gameNames[currentRow * 2] != undefined) {
+        music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
         console.logValue("Launching game!!", gameNames[currentRow * 2])
         control.runProgram(gameNames[currentRow * 2])
     } else if (gameNames[currentRow * 2 + 1] != undefined) {
+        music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
         console.logValue("Launching game!", gameNames[currentRow * 2 + 1])
         control.runProgram(gameNames[currentRow * 2 + 1])
+    } else {
+        music.play(music.stringPlayable("E C - - - - - - ", 500), music.PlaybackMode.InBackground)
+    }
+}
+function validateGames () {
+    actualGameList = control.programList()
+    for (let gli = 0; gli <= gameNames.length - 1; gli++) {
+        tempFoundGame = actualGameList.indexOf(gameNames[gli])
+        console.log(`Found? ${tempFoundGame}`)
+        if (tempFoundGame < 0) {
+            gameNames[gli] = undefined
+        }
     }
 }
 function moveSelection (direction: string) {
@@ -115,7 +130,7 @@ function moveSelection (direction: string) {
         selection.x = leftColumnLeft + selection.width / 2
     }
 }
-let currentRow = 0
+let tempFoundGame = 0
 let tempTextSprite: TextSprite = null
 let sceneChangeTime = 0
 let sceneStartTime = 0
@@ -126,7 +141,6 @@ let numberOfRows = 0
 let rightColumnLeft = 0
 let leftColumnLeft = 0
 let gameOffsetTop = 0
-let gameNames: string[] = []
 let gameImages: Image[] = []
 let rowHeight = 0
 let currentScene = ""
@@ -135,6 +149,10 @@ let blurbOne: string[] = []
 let textSprites: Sprite[] = []
 let tempSprite: Sprite = null
 let tempXpos = 0
+let actualGameList: string[] = []
+let gameNames: string[] = []
+let currentRow = 0
+actualGameList = [""]
 tempSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -164,14 +182,15 @@ assets.image`StarIcon`,
 assets.image`SyncTheBoat`,
 assets.image`YourGameIcon`
 ]
-let gameAnimations = [spriteutils.nullConsts(spriteutils.NullConsts.Undefined), assets.animation`Super Star Story`, spriteutils.nullConsts(spriteutils.NullConsts.Undefined)]
-gameNames = ["Paddle-the-River", "Star", "SyncTheBoat"]
+let gameAnimations = ["", assets.animation`Super Star Story`, ""]
+gameNames = ["Paddle-the-River", "Super-Star-Story", "SyncTheBoat"]
 gameOffsetTop = 40
 leftColumnLeft = 15
 rightColumnLeft = 85
 numberOfRows = Math.ceil(gameImages.length / 2)
 let gameHeight = 34
 gameWidth = 60
+validateGames()
 loadScene()
 game.onUpdateInterval(1000, function () {
     if (currentScene == "title" && game.runtime() - sceneStartTime > sceneChangeTime) {
