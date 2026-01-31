@@ -1,6 +1,9 @@
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("up")
 })
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    launchGame()
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("left")
 })
@@ -19,31 +22,45 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("down")
 })
+function launchGame () {
+    if (selection.x - selection.width / 2 == leftColumnLeft) {
+        console.log(`Launching ${gameNames[currentRow * 2]}`)
+    } else {
+        console.log(`Launching ${gameNames[currentRow * 2 + 1]}`)
+    }
+}
 function moveSelection (direction: string) {
     currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
-    console.log(`Moving ${numberOfRows} ${currentRow}`)
     if (direction == "up" && currentRow > 0) {
         selection.y = selection.y - rowHeight
+        currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
     } else if (direction == "down" && currentRow < numberOfRows - 1) {
+        if (numberOfRows - (currentRow + 1) == 1 && gameImages.length % 2 == 1 && selection.x - selection.width / 2 == rightColumnLeft) {
+            return
+        }
         selection.y = selection.y + rowHeight
+        currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
     } else if (direction == "right" && selection.x - selection.width / 2 < rightColumnLeft - selection.width / 2) {
+        if (numberOfRows - (currentRow + 1) == 0 && gameImages.length % 2 == 1 && selection.x - selection.width / 2 == leftColumnLeft) {
+            return
+        }
         selection.x = rightColumnLeft + selection.width / 2
     } else if (direction == "left" && selection.x - selection.width / 2 > leftColumnLeft - selection.width / 2) {
         selection.x = leftColumnLeft + selection.width / 2
     }
 }
 let rightColumnLeft = 0
-let leftColumnLeft = 0
 let gameOffsetTop = 0
 let gameImages: Image[] = []
-let numberOfRows = 0
-let currentRow = 0
 let rowHeight = 0
+let currentRow = 0
+let numberOfRows = 0
+let leftColumnLeft = 0
 let selection: Sprite = null
 rowHeight = 40
 gameImages = [assets.image`PaddleIcon`, assets.image`PaddleIcon`, assets.image`PaddleIcon`]
 let gameAnimations = [0, 1]
-let gameNames = ["SyncTheBoat", "SyncTheBoat", "SYNC"]
+let gameNames = ["Paddle", "SyncTheBoat", "Star"]
 gameOffsetTop = 10
 leftColumnLeft = 15
 rightColumnLeft = 85
