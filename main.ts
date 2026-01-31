@@ -23,10 +23,11 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("down")
 })
 function launchGame () {
+    console.log("Launching game!")
     if (selection.x - selection.width / 2 == leftColumnLeft) {
-        console.log(`Launching ${gameNames[currentRow * 2]}`)
+        control.runProgram(gameNames[currentRow * 2])
     } else {
-        console.log(`Launching ${gameNames[currentRow * 2 + 1]}`)
+        control.runProgram(gameNames[currentRow * 2 + 1])
     }
 }
 function moveSelection (direction: string) {
@@ -49,14 +50,14 @@ function moveSelection (direction: string) {
         selection.x = leftColumnLeft + selection.width / 2
     }
 }
+let selection: Sprite = null
+let numberOfRows = 0
 let rightColumnLeft = 0
+let leftColumnLeft = 0
 let gameOffsetTop = 0
 let gameImages: Image[] = []
 let rowHeight = 0
 let currentRow = 0
-let numberOfRows = 0
-let leftColumnLeft = 0
-let selection: Sprite = null
 rowHeight = 40
 gameImages = [assets.image`PaddleIcon`, assets.image`PaddleIcon`, assets.image`PaddleIcon`]
 let gameAnimations = [0, 1]
