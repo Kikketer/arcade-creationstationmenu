@@ -70,8 +70,10 @@ spriteutils.createRenderable(3, function (screen2) {
         for (let index = 0; index <= gameImages.length - 1; index++) {
             if (index % 2 == 0) {
                 screen2.drawTransparentImage(gameImages[index], leftColumnLeft, gameOffsetTop + Math.floor(index / 2) * rowHeight)
+                screen2.drawTransparentImage(gamePlayerImages[gamePlayers[index] - 1], leftColumnLeft + 48, gameOffsetTop + 19 + Math.floor(index / 2) * rowHeight)
             } else {
                 screen2.drawTransparentImage(gameImages[index], rightColumnLeft, gameOffsetTop + Math.floor(index / 2) * rowHeight)
+                screen2.drawTransparentImage(gamePlayerImages[gamePlayers[index] - 1], rightColumnLeft + 48, gameOffsetTop + 19 + Math.floor(index / 2) * rowHeight)
             }
         }
     }
@@ -111,6 +113,7 @@ function moveSelection (direction: string) {
     lastButtonPress = game.runtime()
     currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
     sprites.destroy(gameAnimationSprite)
+    sprites.destroy(playersSprite)
     if (direction == "up" && currentRow > 0) {
         selection.y = selection.y - rowHeight
         currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
@@ -129,6 +132,9 @@ function moveSelection (direction: string) {
         selection.x = leftColumnLeft + selection.width / 2
     }
     if (selection.x - selection.width / 2 == leftColumnLeft && gameAnimations[currentRow * 2]) {
+        playersSprite = sprites.create(assets.image`player4`)
+        playersSprite.setPosition(selection.x + 24, selection.y + 10)
+        playersSprite.z = 10
         gameAnimationSprite = sprites.create(img`
             . 
             `, SpriteKind.Food)
@@ -141,6 +147,9 @@ function moveSelection (direction: string) {
         true
         )
     } else if (selection.x - selection.width / 2 == rightColumnLeft && gameAnimations[currentRow * 2 + 1]) {
+        playersSprite = sprites.create(assets.image`player4`)
+        playersSprite.setPosition(selection.x + 24, selection.y + 10)
+        playersSprite.z = 10
         gameAnimationSprite = sprites.create(img`
             . 
             `, SpriteKind.Food)
@@ -155,11 +164,13 @@ function moveSelection (direction: string) {
     }
 }
 let gameAnimationSprite: Sprite = null
+let tempFoundGame = 0
 let tempTextSprite: TextSprite = null
 let sceneChangeTime = 0
 let sceneStartTime = 0
 let selection: Sprite = null
 let logoSprite: Sprite = null
+let playersSprite: Sprite = null
 let lastButtonPress = 0
 let gameWidth = 0
 let numberOfRows = 0
@@ -173,11 +184,10 @@ let currentScene = ""
 let blurbTwo: string[] = []
 let blurbOne: string[] = []
 let textSprites: Sprite[] = []
-let currentRow = 0
-let gameNames: string[] = []
-let actualGameList: string[] = []
 let tempXpos = 0
-let tempFoundGame = 0
+let actualGameList: string[] = []
+let gameNames: string[] = []
+let currentRow = 0
 actualGameList = [""]
 let tempSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -213,6 +223,18 @@ gameAnimations = [
 assets.animation`Super Star Story`,
 [assets.image`SyncTheBoat`],
 [assets.image`SpoopIcon`]
+]
+let gamePlayerImages = [
+assets.image`player4`,
+assets.image`player4`,
+assets.image`player4`,
+assets.image`player4`
+]
+let gamePlayers = [
+1,
+4,
+4,
+4
 ]
 gameNames = [
 "Paddle-the-River",

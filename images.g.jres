@@ -49,6 +49,26 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "SpoopIcon"
     },
+    "image10": {
+        "data": "hwQMAA8AAAAAAAAiIgAAAAAAIDMjAAAAAAAyMyMAAAAAIDMzIwAAAAAyMzIjAAAAIDMjMiMiIgIyMzMyMzMzAjIzMzMzMzMCMjMzMzMzMwIiIiIyIyIiAgAAADIjAAAAAAAAIiIAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "player4"
+    },
+    "image11": {
+        "data": "hwQMAA8AAAAAAAAiIgAAAAAAIDMjAAAAAAAyMyMAAAAAIDMzIwAAAAAyMzIjAAAAIDMjMiMiIgIyMzMyMzMzAjIzMzMzMzMCMjMzMzMzMwIiIiIyIyIiAgAAADIjAAAAAAAAIiIAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "player1"
+    },
+    "image12": {
+        "data": "hwQMAA8AAAAAAAAiIgAAAAAAIDMjAAAAAAAyMyMAAAAAIDMzIwAAAAAyMzIjAAAAIDMjMiMiIgIyMzMyMzMzAjIzMzMzMzMCMjMzMzMzMwIiIiIyIyIiAgAAADIjAAAAAAAAIiIAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "player2"
+    },
+    "image13": {
+        "data": "hwQMAA8AAAAAAAAiIgAAAAAAIDMjAAAAAAAyMyMAAAAAIDMzIwAAAAAyMzIjAAAAIDMjMiMiIgIyMzMyMzMzAjIzMzMzMzMCMjMzMzMzMwIiIiIyIyIiAgAAADIjAAAAAAAAIiIAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "player3"
+    },
     "anim1": {
         "namespace": "myAnimations",
         "id": "anim1",
