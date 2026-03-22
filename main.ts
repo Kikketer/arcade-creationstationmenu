@@ -21,6 +21,7 @@ function loadScene() {
                 `, SpriteKind.Food)
         logoSprite.x = 16
         logoSprite.y = 5
+        logoSprite.z = 100
         animation.runImageAnimation(
             logoSprite,
             assets.animation`MadeLogoAnim`,
@@ -76,6 +77,7 @@ spriteutils.createRenderable(3, function (screen2) {
                 screen2.drawTransparentImage(gamePlayerImages[gamePlayers[index] - 1], rightColumnLeft + 45, gameOffsetTop + 23 + Math.floor(index / 2) * rowHeight)
             }
         }
+        screen2.fillRect(0, 0, 160, 38, 0)
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -94,6 +96,8 @@ function getGameIndex() {
 }
 function launchGame() {
     currentGameIndex = getGameIndex()
+    // Save the current game index for next time we launch
+    blockSettings.writeNumber("currentGameIndex", currentGameIndex)
     if (gameNames[currentGameIndex] != undefined) {
         music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
         console.logValue("Launching game!!", gameNames[currentRow * 2])
@@ -125,13 +129,22 @@ function moveSelection(direction: string) {
     sprites.destroy(gameAnimationSprite)
     sprites.destroy(playersSprite)
     if (direction == "up" && currentRow > 0) {
-        selection.y = selection.y - rowHeight
+        if (selection.y - selection.height / 2 < 50) {
+            gameOffsetTop = gameOffsetTop + rowHeight
+        } else {
+            selection.y = selection.y - rowHeight
+        }
         currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
     } else if (direction == "down" && currentRow < numberOfRows - 1) {
         if (numberOfRows - (currentRow + 1) == 1 && gameImages.length % 2 == 1 && selection.x - selection.width / 2 == rightColumnLeft) {
             return
         }
-        selection.y = selection.y + rowHeight
+        if (selection.y - selection.height / 2 > 50) {
+            gameOffsetTop = gameOffsetTop - rowHeight
+        } else {
+            // Don't actually move the selection if we are now scrolling
+            selection.y = selection.y + rowHeight
+        }
         currentRow = (selection.y - selection.height / 2 - gameOffsetTop) / rowHeight
     } else if (direction == "right" && selection.x - selection.width / 2 < rightColumnLeft - selection.width / 2) {
         if (numberOfRows - (currentRow + 1) == 0 && gameImages.length % 2 == 1 && selection.x - selection.width / 2 == leftColumnLeft) {
@@ -142,9 +155,8 @@ function moveSelection(direction: string) {
         selection.x = leftColumnLeft + selection.width / 2
     }
     currentGameIndex = getGameIndex()
-    console.log(`Current game index, ${currentGameIndex}`)
     if (selection.x - selection.width / 2 == leftColumnLeft && gameAnimations[currentRow * 2]) {
-        playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], 0)
+        playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], SpriteKind.Food)
         playersSprite.setPosition(selection.x + 24, selection.y + 10)
         playersSprite.z = 10
         gameAnimationSprite = sprites.create(img`
@@ -159,7 +171,7 @@ function moveSelection(direction: string) {
             true
         )
     } else if (selection.x - selection.width / 2 == rightColumnLeft && gameAnimations[currentRow * 2 + 1]) {
-        playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], 0)
+        playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], SpriteKind.Food)
         playersSprite.setPosition(selection.x + 24, selection.y + 10)
         playersSprite.z = 10
         gameAnimationSprite = sprites.create(img`
@@ -231,12 +243,14 @@ gameImages = [
     assets.image`PaddleIcon`,
     assets.image`StarIcon`,
     assets.image`SyncTheBoat`,
-    assets.image`SpoopIcon`
+    assets.image`SpoopIcon`,
+    assets.image`SyncTheBoat`
 ]
 gameAnimations = [
     [assets.image`PaddleIcon`],
     assets.animation`Super Star Story`,
     [assets.image`SyncTheBoat`],
+    [assets.image`SpoopIcon`],
     [assets.image`SpoopIcon`]
 ]
 gamePlayerImages = [
@@ -249,13 +263,15 @@ gamePlayers = [
     1,
     4,
     4,
-    4
+    4,
+    3
 ]
 gameNames = [
     "Paddle-the-River",
     "Super-Star-Story",
     "SyncTheBoat",
-    "Spoop"
+    "Spoop",
+    "SUPOO"
 ]
 gameOffsetTop = 40
 leftColumnLeft = 15

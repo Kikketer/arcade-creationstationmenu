@@ -401,19 +401,6 @@ ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 . . . 4 5 5 4 . . 4 5 4 . . 
 . . . 4 4 4 4 . . 4 4 4 . . 
 `;
-            case "image13":
-            case "player3":return img`
-. 4 4 4 4 4 4 . . . . . . . 
-. 4 5 5 5 5 4 . . . . . . . 
-. 4 5 5 5 5 4 . . . . . . . 
-. 4 4 4 4 5 4 . . 4 4 4 4 4 
-. 4 5 5 5 5 4 . . 4 5 5 5 4 
-. 4 5 5 5 5 4 . . 4 5 4 5 4 
-. 4 4 4 4 5 4 . . 4 5 5 5 4 
-. 4 5 5 5 5 4 . . 4 5 4 4 4 
-. 4 5 5 5 5 4 . . 4 5 4 . . 
-. 4 4 4 4 4 4 . . 4 4 4 . . 
-`;
             case "image12":
             case "player2":return img`
 . . 4 4 4 4 . . . . . . . . 
@@ -426,6 +413,19 @@ ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 4 4 5 5 4 4 4 . . 4 5 4 4 4 
 4 5 5 5 5 5 4 . . 4 5 4 . . 
 4 4 4 4 4 4 4 . . 4 4 4 . . 
+`;
+            case "image13":
+            case "player3":return img`
+. 4 4 4 4 4 4 . . . . . . . 
+. 4 5 5 5 5 4 . . . . . . . 
+. 4 5 5 5 5 4 . . . . . . . 
+. 4 4 4 4 5 4 . . 4 4 4 4 4 
+. . 4 5 5 5 4 . . 4 5 5 5 4 
+. . 4 5 5 5 4 . . 4 5 4 5 4 
+. 4 4 4 4 5 4 . . 4 5 5 5 4 
+. 4 5 5 5 5 4 . . 4 5 4 4 4 
+. 4 5 5 5 5 4 . . 4 5 4 . . 
+. 4 4 4 4 4 4 . . 4 4 4 . . 
 `;
         }
         return null;
