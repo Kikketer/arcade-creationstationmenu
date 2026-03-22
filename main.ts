@@ -16,6 +16,12 @@ function loadScene() {
         sprites.destroy(tSprite)
     }
     if (currentScene == "menu") {
+        // Restore the previous game index
+        if (blockSettings.readNumber("currentGameIndex") != undefined) {
+            currentGameIndex = blockSettings.readNumber("currentGameIndex")
+        } else {
+            currentGameIndex = 0
+        }
         logoSprite = sprites.create(img`
                 . 
                 `, SpriteKind.Food)
@@ -30,7 +36,11 @@ function loadScene() {
         )
         selection = sprites.create(assets.image`selector`, SpriteKind.Food)
         selection.z = 10
-        selection.setPosition(leftColumnLeft + gameWidth / 2, rowHeight * 0 + gameOffsetTop + 17)
+        if (currentGameIndex % 2 === 1) {
+            selection.setPosition(rightColumnLeft + gameWidth / 2, rowHeight * Math.floor(currentGameIndex / 2) + gameOffsetTop + 17)
+        } else {
+            selection.setPosition(leftColumnLeft + gameWidth / 2, rowHeight * Math.floor(currentGameIndex / 2) + gameOffsetTop + 17)
+        }
         animation.runImageAnimation(
             selection,
             assets.animation`selectionAnim`,
@@ -197,6 +207,8 @@ let sceneChangeTime = 0
 let sceneStartTime = 0
 let selection: Sprite = null
 let logoSprite: Sprite = null
+let arrowUpSprite: Sprite = null
+let arrowDownSprite: Sprite = null
 let lastButtonPress = 0
 let gameWidth = 0
 let numberOfRows = 0
@@ -245,7 +257,7 @@ gameImages = [
     assets.image`StarIcon`,
     assets.image`SyncTheBoat`,
     assets.image`SpoopIcon`,
-    assets.image`SyncTheBoat`
+    assets.image`YourGameIcon`
 ]
 // When hovered, animations
 gameAnimations = [
@@ -253,7 +265,7 @@ gameAnimations = [
     assets.animation`Super Star Story`,
     [assets.image`SyncTheBoat`],
     [assets.image`SpoopIcon`],
-    [assets.image`SpoopIcon`]
+    [assets.image`YourGameIcon`]
 ]
 // Reference images for player count
 gamePlayerImages = [
@@ -268,7 +280,7 @@ gamePlayers = [
     4,
     4,
     4,
-    3
+    4
 ]
 // The file names:
 gameNames = [
