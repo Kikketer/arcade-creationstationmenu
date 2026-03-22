@@ -239,6 +239,7 @@ blurbOne = ["These games were created", "by students of the", "\"Make Video Game
 blurbTwo = ["Sign up today!"]
 currentScene = "title"
 rowHeight = 38
+// Cover images
 gameImages = [
     assets.image`PaddleIcon`,
     assets.image`StarIcon`,
@@ -246,6 +247,7 @@ gameImages = [
     assets.image`SpoopIcon`,
     assets.image`SyncTheBoat`
 ]
+// When hovered, animations
 gameAnimations = [
     [assets.image`PaddleIcon`],
     assets.animation`Super Star Story`,
@@ -253,12 +255,14 @@ gameAnimations = [
     [assets.image`SpoopIcon`],
     [assets.image`SpoopIcon`]
 ]
+// Reference images for player count
 gamePlayerImages = [
     assets.image`player1`,
     assets.image`player2`,
     assets.image`player3`,
     assets.image`player4`
 ]
+// Number of players per game (index based)
 gamePlayers = [
     1,
     4,
@@ -266,6 +270,7 @@ gamePlayers = [
     4,
     3
 ]
+// The file names:
 gameNames = [
     "Paddle-the-River",
     "Super-Star-Story",
