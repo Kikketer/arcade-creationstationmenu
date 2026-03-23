@@ -139,7 +139,7 @@ function launchGame() {
 }
 function validateGames() {
     actualGameList = control.programList()
-    // actualGameList = []
+    console.logValue('Game List', actualGameList)
     for (let gli = 0; gli <= gameNames.length - 1; gli++) {
         tempFoundGame = actualGameList.indexOf(gameNames[gli])
         if (tempFoundGame < 0) {
