@@ -9,6 +9,21 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         loadScene()
     }
 })
+function renderArrows() {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    if (gameOffsetTop < 40) {
+        // We have things above
+        tempArrowSprite = sprites.create(img`.`, SpriteKind.Enemy)
+        tempArrowSprite.setPosition(80, 40)
+        animation.runImageAnimation(tempArrowSprite, assets.animation`arrowUp`, 200, true)
+    }
+    if ((gameNames.length / 2 * rowHeight) - (-gameOffsetTop + 40) > 80) {
+        // We have things below
+        tempArrowSprite = sprites.create(img`.`, SpriteKind.Enemy)
+        tempArrowSprite.setPosition(80, 110)
+        animation.runImageAnimation(tempArrowSprite, assets.animation`arrowDown`, 200, true)
+    }
+}
 function loadScene() {
     sprites.destroyAllSpritesOfKind(SpriteKind.Food)
     lastButtonPress = game.runtime()
@@ -36,11 +51,13 @@ function loadScene() {
         )
         selection = sprites.create(assets.image`selector`, SpriteKind.Food)
         selection.z = 10
+        gameOffsetTop = 40 - (Math.floor(currentGameIndex / 2) * rowHeight)
         if (currentGameIndex % 2 === 1) {
             selection.setPosition(rightColumnLeft + gameWidth / 2, rowHeight * Math.floor(currentGameIndex / 2) + gameOffsetTop + 17)
         } else {
             selection.setPosition(leftColumnLeft + gameWidth / 2, rowHeight * Math.floor(currentGameIndex / 2) + gameOffsetTop + 17)
         }
+        renderArrows()
         animation.runImageAnimation(
             selection,
             assets.animation`selectionAnim`,
@@ -164,6 +181,7 @@ function moveSelection(direction: string) {
     } else if (direction == "left" && selection.x - selection.width / 2 > leftColumnLeft - selection.width / 2) {
         selection.x = leftColumnLeft + selection.width / 2
     }
+    renderArrows()
     currentGameIndex = getGameIndex()
     if (selection.x - selection.width / 2 == leftColumnLeft && gameAnimations[currentRow * 2]) {
         playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], SpriteKind.Food)
@@ -227,6 +245,7 @@ let blurbOne: string[] = []
 let textSprites: Sprite[] = []
 let actualGameList: string[] = []
 let tempXpos = 0
+let tempArrowSprite: Sprite = null
 actualGameList = [""]
 let tempSprite = sprites.create(img`
         . . . . . . . . . . . . . . . . 

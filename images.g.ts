@@ -880,29 +880,29 @@ f55555................................................55555f
 f5555555555555555555555555555555555555555555555555555555555f
 ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 `];
-            case "arrowDown":
-            case "anim5":return [img`
-. . . 
-. . . 
-1 . 1 
-. 1 . 
-`, img`
-. . . 
-1 . 1 
-. 1 . 
-. . . 
-`];
             case "arrowUp":
             case "anim4":return [img`
-. . . 
-. 1 . 
-1 . 1 
-. . . 
+. . . . . 
+. . 1 . . 
+. 1 1 1 . 
+1 . . . 1 
 `, img`
-. 1 . 
-1 . 1 
-. . . 
-. . . 
+. . 1 . . 
+. 1 1 1 . 
+1 . . . 1 
+. . . . . 
+`];
+            case "arrowDown":
+            case "anim5":return [img`
+. . . . . 
+1 . . . 1 
+. 1 1 1 . 
+. . 1 . . 
+`, img`
+1 . . . 1 
+. 1 1 1 . 
+. . 1 . . 
+. . . . . 
 `];
         }
         return null;
