@@ -128,18 +128,18 @@ function launchGame() {
     if (gameNames[currentGameIndex] != undefined) {
         music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
         console.logValue("Launching game!!", gameNames[currentRow * 2])
-        // control.runProgram(gameNames[currentRow * 2])
+        control.runProgram(gameNames[currentRow * 2])
     } else if (gameNames[currentGameIndex] != undefined) {
         music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
         console.logValue("Launching game!", gameNames[currentRow * 2 + 1])
-        // control.runProgram(gameNames[currentRow * 2 + 1])
+        control.runProgram(gameNames[currentRow * 2 + 1])
     } else {
         music.play(music.stringPlayable("E C - - - - - - ", 500), music.PlaybackMode.InBackground)
     }
 }
 function validateGames() {
-    // actualGameList = control.programList()
-    actualGameList = []
+    actualGameList = control.programList()
+    // actualGameList = []
     for (let gli = 0; gli <= gameNames.length - 1; gli++) {
         tempFoundGame = actualGameList.indexOf(gameNames[gli])
         if (tempFoundGame < 0) {
