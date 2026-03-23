@@ -85,7 +85,7 @@ function renderArrows () {
         tempArrowSprite = sprites.create(img`
             . 
             `, SpriteKind.Enemy)
-        tempArrowSprite.setPosition(80, 40)
+        tempArrowSprite.setPosition(78, 40)
         animation.runImageAnimation(
         tempArrowSprite,
         assets.animation`arrowUp`,
@@ -98,7 +98,7 @@ function renderArrows () {
         tempArrowSprite = sprites.create(img`
             . 
             `, SpriteKind.Enemy)
-        tempArrowSprite.setPosition(80, 110)
+        tempArrowSprite.setPosition(78, 110)
         animation.runImageAnimation(
         tempArrowSprite,
         assets.animation`arrowDown`,
@@ -254,12 +254,12 @@ let currentScene = ""
 let blurbTwo: string[] = []
 let blurbOne: string[] = []
 let textSprites: Sprite[] = []
-let tempXpos = 0
-let actualGameList: string[] = []
-let gameNames: string[] = []
-let arrowDownSprite = null
-let arrowUpSprite = null
 let currentRow = 0
+let arrowUpSprite = null
+let arrowDownSprite = null
+let gameNames: string[] = []
+let actualGameList: string[] = []
+let tempXpos = 0
 actualGameList = [""]
 let tempSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -291,6 +291,13 @@ assets.image`StarIcon`,
 assets.image`SyncTheBoat`,
 assets.image`SpoopIcon`,
 assets.image`RyojiCat`,
+assets.image`EvelynBunnycat`,
+assets.image`LucianCave`,
+assets.image`WilliamDoubleDeath`,
+assets.image`KaitoBubbleSlash`,
+assets.image`EzVirusHunter`,
+assets.image`EliDeathTemple`,
+assets.image`ScottSaveYourself`,
 assets.image`YourGameIcon`
 ]
 // When hovered, animations
@@ -300,6 +307,13 @@ assets.animation`Super Star Story`,
 [assets.image`SyncTheBoat`],
 [assets.image`SpoopIcon`],
 [assets.image`RyojiCat`],
+[assets.image`EvelynBunnycat`],
+[assets.image`LucianCave`],
+[assets.image`WilliamDoubleDeath`],
+[assets.image`KaitoBubbleSlash`],
+[assets.image`EzVirusHunter`],
+[assets.image`EliDeathTemple`],
+[assets.image`ScottSaveYourself`],
 [assets.image`YourGameIcon`]
 ]
 // Reference images for player count
@@ -316,6 +330,13 @@ gamePlayers = [
 4,
 4,
 1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
 4
 ]
 // The file names:
@@ -325,6 +346,13 @@ gameNames = [
 "SyncTheBoat",
 "Spoop",
 "RyojiCat",
+"EvelynBunnycat",
+"LucianCave",
+"WilliamDoubleDeath",
+"KaitoBubbleSlash",
+"EzVirusHunter",
+"EliDeathTemple",
+"ScottSaveYourself",
 ""
 ]
 gameOffsetTop = 40
