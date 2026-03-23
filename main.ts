@@ -9,22 +9,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         loadScene()
     }
 })
-function renderArrows() {
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-    if (gameOffsetTop < 40) {
-        // We have things above
-        tempArrowSprite = sprites.create(img`.`, SpriteKind.Enemy)
-        tempArrowSprite.setPosition(80, 40)
-        animation.runImageAnimation(tempArrowSprite, assets.animation`arrowUp`, 200, true)
-    }
-    if ((gameNames.length / 2 * rowHeight) - (-gameOffsetTop + 40) > 80) {
-        // We have things below
-        tempArrowSprite = sprites.create(img`.`, SpriteKind.Enemy)
-        tempArrowSprite.setPosition(80, 110)
-        animation.runImageAnimation(tempArrowSprite, assets.animation`arrowDown`, 200, true)
-    }
-}
-function loadScene() {
+function loadScene () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Food)
     lastButtonPress = game.runtime()
     for (let tSprite of textSprites) {
@@ -38,45 +23,45 @@ function loadScene() {
             currentGameIndex = 0
         }
         logoSprite = sprites.create(img`
-                . 
-                `, SpriteKind.Food)
+            . 
+            `, SpriteKind.Food)
         logoSprite.x = 16
         logoSprite.y = 5
         logoSprite.z = 100
         animation.runImageAnimation(
-            logoSprite,
-            assets.animation`MadeLogoAnim`,
-            500,
-            true
+        logoSprite,
+        assets.animation`MadeLogoAnim`,
+        500,
+        true
         )
         selection = sprites.create(assets.image`selector`, SpriteKind.Food)
         selection.z = 10
-        gameOffsetTop = 40 - (Math.floor(currentGameIndex / 2) * rowHeight)
-        if (currentGameIndex % 2 === 1) {
+        gameOffsetTop = 40 - Math.floor(currentGameIndex / 2) * rowHeight
+        if (currentGameIndex % 2 == 1) {
             selection.setPosition(rightColumnLeft + gameWidth / 2, rowHeight * Math.floor(currentGameIndex / 2) + gameOffsetTop + 17)
         } else {
             selection.setPosition(leftColumnLeft + gameWidth / 2, rowHeight * Math.floor(currentGameIndex / 2) + gameOffsetTop + 17)
         }
         renderArrows()
         animation.runImageAnimation(
-            selection,
-            assets.animation`selectionAnim`,
-            200,
-            true
+        selection,
+        assets.animation`selectionAnim`,
+        200,
+        true
         )
     } else if (currentScene == "title") {
         sceneStartTime = game.runtime()
         sceneChangeTime = 60000
         logoSprite = sprites.create(img`
-                . 
-                `, SpriteKind.Food)
+            . 
+            `, SpriteKind.Food)
         logoSprite.x = 16
         logoSprite.y = 10
         animation.runImageAnimation(
-            logoSprite,
-            assets.animation`MadeLogoAnim`,
-            200,
-            true
+        logoSprite,
+        assets.animation`MadeLogoAnim`,
+        200,
+        true
         )
         for (let i = 0; i <= blurbOne.length - 1; i++) {
             tempTextSprite = textsprite.create(blurbOne[i])
@@ -93,6 +78,35 @@ function loadScene() {
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("left")
 })
+function renderArrows () {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    if (gameOffsetTop < 40) {
+        // We have things above
+        tempArrowSprite = sprites.create(img`
+            . 
+            `, SpriteKind.Enemy)
+        tempArrowSprite.setPosition(80, 40)
+        animation.runImageAnimation(
+        tempArrowSprite,
+        assets.animation`arrowUp`,
+        200,
+        true
+        )
+    }
+    if (gameNames.length / 2 * rowHeight - (0 - gameOffsetTop + 40) > 80) {
+        // We have things below
+        tempArrowSprite = sprites.create(img`
+            . 
+            `, SpriteKind.Enemy)
+        tempArrowSprite.setPosition(80, 110)
+        animation.runImageAnimation(
+        tempArrowSprite,
+        assets.animation`arrowDown`,
+        200,
+        true
+        )
+    }
+}
 spriteutils.createRenderable(3, function (screen2) {
     if (currentScene == "menu") {
         for (let index = 0; index <= gameImages.length - 1; index++) {
@@ -113,15 +127,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     moveSelection("down")
 })
-function getGameIndex() {
-    if (selection.x - selection.width / 2 == leftColumnLeft) {
-        return currentRow * 2
-    } else {
-        return currentRow * 2 + 1
-    }
-    return undefined
-}
-function launchGame() {
+function launchGame () {
     currentGameIndex = getGameIndex()
     // Save the current game index for next time we launch
     blockSettings.writeNumber("currentGameIndex", currentGameIndex)
@@ -137,9 +143,9 @@ function launchGame() {
         music.play(music.stringPlayable("E C - - - - - - ", 500), music.PlaybackMode.InBackground)
     }
 }
-function validateGames() {
+function validateGames () {
     actualGameList = control.programList()
-    console.logValue('Game List', actualGameList)
+console.logValue("Game List", actualGameList)
     for (let gli = 0; gli <= gameNames.length - 1; gli++) {
         tempFoundGame = actualGameList.indexOf(gameNames[gli])
         if (tempFoundGame < 0) {
@@ -147,7 +153,15 @@ function validateGames() {
         }
     }
 }
-function moveSelection(direction: string) {
+function getGameIndex () {
+    if (selection.x - selection.width / 2 == leftColumnLeft) {
+        return currentRow * 2
+    } else {
+        return currentRow * 2 + 1
+    }
+    return undefined
+}
+function moveSelection (direction: string) {
     if (currentScene != "menu") {
         return
     }
@@ -188,52 +202,49 @@ function moveSelection(direction: string) {
         playersSprite.setPosition(selection.x + 24, selection.y + 10)
         playersSprite.z = 10
         gameAnimationSprite = sprites.create(img`
-                . 
-                `, SpriteKind.Food)
+            . 
+            `, SpriteKind.Food)
         gameAnimationSprite.z = 5
         gameAnimationSprite.setPosition(selection.x - 29, selection.y - 16)
         animation.runImageAnimation(
-            gameAnimationSprite,
-            gameAnimations[currentRow * 2],
-            200,
-            true
+        gameAnimationSprite,
+        gameAnimations[currentRow * 2],
+        200,
+        true
         )
     } else if (selection.x - selection.width / 2 == rightColumnLeft && gameAnimations[currentRow * 2 + 1]) {
         playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], SpriteKind.Food)
         playersSprite.setPosition(selection.x + 24, selection.y + 10)
         playersSprite.z = 10
         gameAnimationSprite = sprites.create(img`
-                . 
-                `, SpriteKind.Food)
+            . 
+            `, SpriteKind.Food)
         gameAnimationSprite.z = 5
         gameAnimationSprite.setPosition(selection.x - 29, selection.y - 16)
         animation.runImageAnimation(
-            gameAnimationSprite,
-            gameAnimations[currentRow * 2 + 1],
-            200,
-            true
+        gameAnimationSprite,
+        gameAnimations[currentRow * 2 + 1],
+        200,
+        true
         )
     }
 }
 let playersSprite: Sprite = null
 let gameAnimationSprite: Sprite = null
 let tempFoundGame = 0
-let currentRow = 0
-let currentGameIndex = 0
+let tempArrowSprite: Sprite = null
 let tempTextSprite: TextSprite = null
 let sceneChangeTime = 0
 let sceneStartTime = 0
 let selection: Sprite = null
 let logoSprite: Sprite = null
-let arrowUpSprite: Sprite = null
-let arrowDownSprite: Sprite = null
+let currentGameIndex = 0
 let lastButtonPress = 0
 let gameWidth = 0
 let numberOfRows = 0
 let rightColumnLeft = 0
 let leftColumnLeft = 0
 let gameOffsetTop = 0
-let gameNames: string[] = []
 let gamePlayers: number[] = []
 let gamePlayerImages: Image[] = []
 let gameAnimations: Image[][] = []
@@ -243,28 +254,31 @@ let currentScene = ""
 let blurbTwo: string[] = []
 let blurbOne: string[] = []
 let textSprites: Sprite[] = []
-let actualGameList: string[] = []
 let tempXpos = 0
-let tempArrowSprite: Sprite = null
+let actualGameList: string[] = []
+let gameNames: string[] = []
+let arrowDownSprite = null
+let arrowUpSprite = null
+let currentRow = 0
 actualGameList = [""]
 let tempSprite = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Food)
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Food)
 textSprites = [tempSprite]
 blurbOne = ["These games were created", "by students of the", "\"Make Video Games\" class."]
 blurbTwo = ["Sign up today!"]
@@ -272,42 +286,46 @@ currentScene = "title"
 rowHeight = 38
 // Cover images
 gameImages = [
-    assets.image`PaddleIcon`,
-    assets.image`StarIcon`,
-    assets.image`SyncTheBoat`,
-    assets.image`SpoopIcon`,
-    assets.image`YourGameIcon`
+assets.image`PaddleIcon`,
+assets.image`StarIcon`,
+assets.image`SyncTheBoat`,
+assets.image`SpoopIcon`,
+assets.image`RyojiCat`,
+assets.image`YourGameIcon`
 ]
 // When hovered, animations
 gameAnimations = [
-    [assets.image`PaddleIcon`],
-    assets.animation`Super Star Story`,
-    [assets.image`SyncTheBoat`],
-    [assets.image`SpoopIcon`],
-    [assets.image`YourGameIcon`]
+[assets.image`PaddleIcon`],
+assets.animation`Super Star Story`,
+[assets.image`SyncTheBoat`],
+[assets.image`SpoopIcon`],
+[assets.image`RyojiCat`],
+[assets.image`YourGameIcon`]
 ]
 // Reference images for player count
 gamePlayerImages = [
-    assets.image`player1`,
-    assets.image`player2`,
-    assets.image`player3`,
-    assets.image`player4`
+assets.image`player1`,
+assets.image`player2`,
+assets.image`player3`,
+assets.image`player4`
 ]
 // Number of players per game (index based)
 gamePlayers = [
-    1,
-    4,
-    4,
-    4,
-    4
+1,
+4,
+4,
+4,
+1,
+4
 ]
 // The file names:
 gameNames = [
-    "Paddle-the-River",
-    "Super-Star-Story",
-    "SyncTheBoat",
-    "Spoop",
-    "SUPOO"
+"Paddle-the-River",
+"Super-Star-Story",
+"SyncTheBoat",
+"Spoop",
+"RyojiCat",
+""
 ]
 gameOffsetTop = 40
 leftColumnLeft = 15
