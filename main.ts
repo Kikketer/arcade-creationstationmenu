@@ -145,7 +145,7 @@ function launchGame () {
 }
 function validateGames () {
     actualGameList = control.programList()
-console.logValue("Game List", actualGameList)
+    console.logValue("Game List", actualGameList)
     for (let gli = 0; gli <= gameNames.length - 1; gli++) {
         tempFoundGame = actualGameList.indexOf(gameNames[gli])
         if (tempFoundGame < 0) {
@@ -350,8 +350,8 @@ gameNames = [
 "LucianCave",
 "WilliamDoubleDeath",
 "KaitoBubbleSlash",
-"EzVirusHunter",
-"EliDeathTemple",
+"EzrenVirusHunter",
+"EliInfection",
 "ScottSaveYourself",
 ""
 ]
