@@ -135,20 +135,22 @@ function launchGame () {
     currentGameIndex = getGameIndex()
     // Save the current game index for next time we launch
     blockSettings.writeNumber("currentGameIndex", currentGameIndex)
+    console.logValue('Selected Game', gameNames[currentGameIndex])
     if (gameNames[currentGameIndex] != undefined) {
         music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
-        console.logValue("Launching game!!", gameNames[currentRow * 2])
-        control.runProgram(gameNames[currentRow * 2])
-    } else if (gameNames[currentGameIndex] != undefined) {
-        music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
-        console.logValue("Launching game!", gameNames[currentRow * 2 + 1])
-        control.runProgram(gameNames[currentRow * 2 + 1])
+        console.logValue("Launching game!!", gameNames[currentGameIndex])
+        control.runProgram(gameNames[currentGameIndex])
     } else {
         music.play(music.stringPlayable("E C - - - - - - ", 500), music.PlaybackMode.InBackground)
     }
 }
 function validateGames () {
     actualGameList = control.programList()
+    // For debugging we keep the fake names
+    if (actualGameList[0] === 'flappy_duck') {
+        return
+    }
+    
     for (let gli = 0; gli <= gameNames.length - 1; gli++) {
         tempFoundGame = actualGameList.indexOf(gameNames[gli])
         if (tempFoundGame < 0) {
