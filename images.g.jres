@@ -109,6 +109,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "ScottSaveYourself"
     },
+    "image22": {
+        "data": "hwQfAB8AAAAREREREREREREREREREREB8f////Hx8RHx///x////AfEREfHx8f/xERER8RER8QHx8f/x8f////Ef8fHx//EB8fH/8fEfHxERH/Hx8f/xAfHx//HxH/ERHxER8fH/8QHxERHxEf/xHx////EREfEB8f////Hx8fHx8fHx////ARERERHxER8R8RHxEREREQERHx//8fH/ERHx8f/x//8BERH/H/8R8fH//xH/HxEfAfEfH/Ef//ERER//ER8fEQEREREf/xER8f8REfH/EREB8fEf/xEf//ERH//xER//AfH/ERER/x8REf8fERH/HwHxHx/xH//xER//8REf//EB8f//ERH///H/8f/x8fHxAREf8fEf8R8fH/8R/xEf8QEREf8f8fHx//Ef8f/xEfEBEfH/8R//ER8RH/EfEf8RAfER/xEfH/8f/x8f/x8f8QHxH/HxH/8fHx8f8f//ER8BEREREfH/Hx8RH/8R8fERAfH///8R/xEfEf/x8fHxEQHxERHx8R//H/H//xHx8fEB8fH/8RH/Hx8fH/H///HxAfHx//HxEf/x8RER/xH/HwHx8f/xERHx8fH/8f/x//EB8RER8fERHxEfEf8f//8fAfH///8RHxEfER/xHx8fEQEREREREREREREREREREREB",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "qrcode"
+    },
+    "image24": {
+        "data": "hwQ8ACIAAAARH/ERH/ERH/ERH/ERH/ERHwAAAP////////////////////8fAAAA8f//////////IiLy//////8AAADx//8v/////y///y//////HwAAAP/////y////L///L/////IfAAAA8f///y////8v//Iv////8v8AAADx/////yIi/y//8i///y//HwAAAP////8v//////Ii8v//L/8fAAAA8f////L///////////8v//8AAADx//8v//////////////L/HwAAAP//////////////8v//8v8fAAAA8f////8i8v//Ly8v///y//8AAADx////L/8v//8vLy////L/HwAAAP////8v/y////8iIv//8v8fAAAA8f////8i8v/////////y//8AAADx//////////////////L/HwAAAP///////////y8iIv8v8v8fAAAA8f///y8i8v//L////y/y//8AAADx//////8v//8v////L/L/HwAAAP///////y////8iIv8v8v8fAAAA8f///y8iIv//L////y/y//8AAADx//////////8v////L/L/HwAAAP////////////8iIv8v8v8fAAAA8f///y8iIv///////y////8AAADx////L///////IvL/L///HwAAAP///////////y8vL/////8fAAAA8f//////////Ly8v//////8AAADx////////////Ii//////HwAAAP////////////////////8fAAAAEREREREREREREREREREREREAAAAR8f////Hx8RHx///x////EQAAABHxERHx8fH/8REREfEREfERAAAAEfHx//Hx////8R/x8fH/8REAAAAR8fH/8fEfHxERH/Hx8f/xEQAAABHx8f/x8R/xER8REfHx//ERAAAAEfEREfER//EfH///8RER8REAAAAR8f////Hx8fHx8fHx////EQAAABERERER8REfEfER8RERERERAAAAEREfH//x8f8REfHx//H//xEAAAARERH/H/8R8fH//xH/HxEfEQAAABHxHx/xH//xEREf/xEfHxERAAAAERERER//ERHx/xER8f8REREAAAAR8fEf/xEf//ERH//xER//EQAAABHx/xEREf8fERH/HxER/x8RAAAAEfEfH/Ef//ERH//xER//8REAAAAR8f//ERH///H/8f/x8fHxEQAAABERH/HxH/EfHx//Ef8RH/ERAAAAERER/x/x8fH/8R/x//ER8REAAAAREfH/8R//ER8RH/EfEf8REQAAABHxEf8RHx//H/8fH/8fH/ERAAAAEfEf8fEf/x8fHx/x//8RHxEAAAAREREREfH/Hx8RH/8R8fEREQAAABHx////Ef8RHxH/8fHx8RERAAAAEfEREfHxH/8f8f//EfHx8REAAAAR8fH/8RH/Hx8fH/H///HxEQAAABHx8f/x8RH/8fEREf8R/x8RAAAAEfHx//EREfHx8f/x//H/8REAAAAR8RER8fERHxEfEf8f//8fEQAAABHx////ER8RHxEf8R8fHxERAAAAEREREREREREREREREREREREAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "YourGame"
+    },
     "anim1": {
         "namespace": "myAnimations",
         "id": "anim1",

@@ -112,10 +112,14 @@ spriteutils.createRenderable(3, function (screen2) {
         for (let index = 0; index <= gameImages.length - 1; index++) {
             if (index % 2 == 0) {
                 screen2.drawTransparentImage(gameImages[index], leftColumnLeft, gameOffsetTop + Math.floor(index / 2) * rowHeight)
-                screen2.drawTransparentImage(gamePlayerImages[gamePlayers[index] - 1], leftColumnLeft + 45, gameOffsetTop + 23 + Math.floor(index / 2) * rowHeight)
+                if (gamePlayers[index] > 0) {
+                    screen2.drawTransparentImage(gamePlayerImages[gamePlayers[index] - 1], leftColumnLeft + 45, gameOffsetTop + 23 + Math.floor(index / 2) * rowHeight)
+                }
             } else {
                 screen2.drawTransparentImage(gameImages[index], rightColumnLeft, gameOffsetTop + Math.floor(index / 2) * rowHeight)
-                screen2.drawTransparentImage(gamePlayerImages[gamePlayers[index] - 1], rightColumnLeft + 45, gameOffsetTop + 23 + Math.floor(index / 2) * rowHeight)
+                if (gamePlayers[index] > 0) {
+                    screen2.drawTransparentImage(gamePlayerImages[gamePlayers[index] - 1], rightColumnLeft + 45, gameOffsetTop + 23 + Math.floor(index / 2) * rowHeight)
+                }
             }
         }
         screen2.fillRect(0, 0, 160, 38, 0)
@@ -145,7 +149,6 @@ function launchGame () {
 }
 function validateGames () {
     actualGameList = control.programList()
-    console.logValue("Game List", actualGameList)
     for (let gli = 0; gli <= gameNames.length - 1; gli++) {
         tempFoundGame = actualGameList.indexOf(gameNames[gli])
         if (tempFoundGame < 0) {
@@ -198,9 +201,11 @@ function moveSelection (direction: string) {
     renderArrows()
     currentGameIndex = getGameIndex()
     if (selection.x - selection.width / 2 == leftColumnLeft && gameAnimations[currentRow * 2]) {
-        playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], SpriteKind.Food)
-        playersSprite.setPosition(selection.x + 24, selection.y + 10)
-        playersSprite.z = 10
+        if (gamePlayers[currentGameIndex] > 0) {
+            playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], SpriteKind.Food)
+            playersSprite.setPosition(selection.x + 24, selection.y + 10)
+            playersSprite.z = 10
+        }
         gameAnimationSprite = sprites.create(img`
             . 
             `, SpriteKind.Food)
@@ -213,9 +218,11 @@ function moveSelection (direction: string) {
         true
         )
     } else if (selection.x - selection.width / 2 == rightColumnLeft && gameAnimations[currentRow * 2 + 1]) {
-        playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], SpriteKind.Food)
-        playersSprite.setPosition(selection.x + 24, selection.y + 10)
-        playersSprite.z = 10
+        if (gamePlayers[currentGameIndex] > 0) {
+            playersSprite = sprites.create(gamePlayerImages[gamePlayers[currentGameIndex] - 1], SpriteKind.Food)
+            playersSprite.setPosition(selection.x + 24, selection.y + 10)
+            playersSprite.z = 10
+        }
         gameAnimationSprite = sprites.create(img`
             . 
             `, SpriteKind.Food)
@@ -298,7 +305,7 @@ assets.image`KaitoBubbleSlash`,
 assets.image`EzVirusHunter`,
 assets.image`EliDeathTemple`,
 assets.image`ScottSaveYourself`,
-assets.image`YourGameIcon`
+assets.image`YourGame`
 ]
 // When hovered, animations
 gameAnimations = [
@@ -314,7 +321,7 @@ assets.animation`Super Star Story`,
 [assets.image`EzVirusHunter`],
 [assets.image`EliDeathTemple`],
 [assets.image`ScottSaveYourself`],
-[assets.image`YourGameIcon`]
+[assets.image`YourGame`]
 ]
 // Reference images for player count
 gamePlayerImages = [
@@ -337,7 +344,7 @@ gamePlayers = [
 1,
 1,
 1,
-4
+0
 ]
 // The file names:
 gameNames = [
