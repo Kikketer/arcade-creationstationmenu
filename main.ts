@@ -17,8 +17,8 @@ function loadScene () {
     }
     if (currentScene == "menu") {
         // Restore the previous game index
-        if (blockSettings.readNumber("currentGameIndex") != undefined) {
-            currentGameIndex = blockSettings.readNumber("currentGameIndex")
+        if (settings.readNumber("currentGameIndex") != undefined) {
+            currentGameIndex = settings.readNumber("currentGameIndex")
         } else {
             currentGameIndex = 0
         }
@@ -134,7 +134,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 function launchGame () {
     currentGameIndex = getGameIndex()
     // Save the current game index for next time we launch
-    blockSettings.writeNumber("currentGameIndex", currentGameIndex)
+    settings.writeNumber("currentGameIndex", currentGameIndex)
     console.logValue('Selected Game', gameNames[currentGameIndex])
     if (gameNames[currentGameIndex] != undefined) {
         music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
