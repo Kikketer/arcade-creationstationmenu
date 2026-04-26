@@ -133,9 +133,8 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function launchGame () {
     currentGameIndex = getGameIndex()
-    // Save the current game index for next time we launch
     settings.writeNumber("currentGameIndex", currentGameIndex)
-    console.logValue('Selected Game', gameNames[currentGameIndex])
+console.logValue("Selected Game", gameNames[currentGameIndex])
     if (gameNames[currentGameIndex] != undefined) {
         music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
         console.logValue("Launching game!!", gameNames[currentGameIndex])
@@ -146,11 +145,10 @@ function launchGame () {
 }
 function validateGames () {
     actualGameList = control.programList()
-    // For debugging we keep the fake names
-    if (actualGameList[0] === 'flappy_duck') {
+// For debugging we keep the fake names
+    if (actualGameList[0] == "flappy_duck") {
         return
     }
-    
     for (let gli = 0; gli <= gameNames.length - 1; gli++) {
         tempFoundGame = actualGameList.indexOf(gameNames[gli])
         if (tempFoundGame < 0) {
@@ -240,6 +238,7 @@ function moveSelection (direction: string) {
 }
 let playersSprite: Sprite = null
 let gameAnimationSprite: Sprite = null
+let currentRow = 0
 let tempFoundGame = 0
 let tempArrowSprite: Sprite = null
 let tempTextSprite: TextSprite = null
@@ -247,7 +246,6 @@ let sceneChangeTime = 0
 let sceneStartTime = 0
 let selection: Sprite = null
 let logoSprite: Sprite = null
-let currentGameIndex = 0
 let lastButtonPress = 0
 let gameWidth = 0
 let numberOfRows = 0
@@ -263,7 +261,7 @@ let currentScene = ""
 let blurbTwo: string[] = []
 let blurbOne: string[] = []
 let textSprites: Sprite[] = []
-let currentRow = 0
+let currentGameIndex = 0
 let arrowUpSprite = null
 let arrowDownSprite = null
 let gameNames: string[] = []
@@ -297,6 +295,8 @@ rowHeight = 38
 gameImages = [
 assets.image`PaddleIcon`,
 assets.image`StarIcon`,
+assets.image`WilliamZombie`,
+assets.image`WilliamFight`,
 assets.image`SyncTheBoat`,
 assets.image`SpoopIcon`,
 assets.image`RyojiCat`,
@@ -313,6 +313,8 @@ assets.image`YourGame`
 gameAnimations = [
 [assets.image`PaddleIcon`],
 assets.animation`Super Star Story`,
+[assets.image`WilliamZombie`],
+[assets.image`WilliamFight`],
 [assets.image`SyncTheBoat`],
 [assets.image`SpoopIcon`],
 [assets.image`RyojiCat`],
@@ -336,6 +338,8 @@ assets.image`player4`
 gamePlayers = [
 1,
 4,
+2,
+1,
 4,
 4,
 1,
@@ -352,6 +356,8 @@ gamePlayers = [
 gameNames = [
 "Paddle-the-River",
 "Super-Star-Story",
+"WilliamZombie",
+"WilliamFight",
 "SyncTheBoat",
 "Spoop",
 "RyojiCat",
