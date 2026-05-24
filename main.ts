@@ -152,7 +152,7 @@ function validateGames () {
     for (let gli = 0; gli <= gameNames.length - 1; gli++) {
         tempFoundGame = actualGameList.indexOf(gameNames[gli])
         if (tempFoundGame < 0) {
-            gameNames[gli] = undefined
+            gameNames[gli] = spriteutils.nullConsts(spriteutils.NullConsts.Undefined)
         }
     }
 }
@@ -261,12 +261,12 @@ let currentScene = ""
 let blurbTwo: string[] = []
 let blurbOne: string[] = []
 let textSprites: Sprite[] = []
-let currentGameIndex = 0
 let arrowUpSprite = null
 let arrowDownSprite = null
 let gameNames: string[] = []
 let actualGameList: string[] = []
 let tempXpos = 0
+let currentGameIndex = 0
 actualGameList = [""]
 let tempSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -295,6 +295,7 @@ rowHeight = 38
 gameImages = [
 assets.image`PaddleIcon`,
 assets.image`StarIcon`,
+assets.image`GreedyPirates`,
 assets.image`WilliamZombie`,
 assets.image`WilliamFight`,
 assets.image`SyncTheBoat`,
@@ -313,6 +314,7 @@ assets.image`YourGame`
 gameAnimations = [
 [assets.image`PaddleIcon`],
 assets.animation`Super Star Story`,
+[assets.image`GreedyPirates`],
 [assets.image`WilliamZombie`],
 [assets.image`WilliamFight`],
 [assets.image`SyncTheBoat`],
@@ -339,6 +341,7 @@ gamePlayers = [
 1,
 4,
 2,
+2,
 1,
 4,
 4,
@@ -356,6 +359,7 @@ gamePlayers = [
 gameNames = [
 "Paddle-the-River",
 "Super-Star-Story",
+"ChrisPiratesOfFour",
 "WilliamZombie",
 "WilliamFight",
 "SyncTheBoat",
