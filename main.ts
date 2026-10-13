@@ -16,11 +16,16 @@ function loadScene () {
         sprites.destroy(tSprite)
     }
     if (currentScene == "menu") {
+        // Pull a fresh list — games can appear/disappear via USB installs
+        loadGames()
         // Restore the previous game index
         if (settings.readNumber("currentGameIndex") != undefined) {
             currentGameIndex = settings.readNumber("currentGameIndex")
         } else {
             currentGameIndex = 0
+        }
+        if (currentGameIndex >= gameNames.length) {
+            currentGameIndex = Math.max(0, gameNames.length - 1)
         }
         logoSprite = sprites.create(img`
             . 
@@ -138,23 +143,35 @@ console.logValue("Selected Game", gameNames[currentGameIndex])
     if (gameNames[currentGameIndex] != undefined) {
         music.play(music.stringPlayable("C E - - - - - - ", 500), music.PlaybackMode.InBackground)
         console.logValue("Launching game!!", gameNames[currentGameIndex])
-        control.runProgram(gameNames[currentGameIndex])
+        if (!cabinet.debugMode) {
+            control.runProgram(gameNames[currentGameIndex])
+        }
     } else {
         music.play(music.stringPlayable("E C - - - - - - ", 500), music.PlaybackMode.InBackground)
     }
 }
-function validateGames () {
-    actualGameList = control.programList()
-// For debugging we keep the fake names
-    if (actualGameList[0] == "flappy_duck") {
-        return
+function loadInstalledGames () {
+    // Fresh from the cabinet: names from the games dir, covers and
+    // player counts from each game's cover.png / info.json
+    gameNames = cabinet.gameList()
+    gameImages = []
+    gamePlayers = []
+    gameAnimations = []
+    for (let name of gameNames) {
+        let info = cabinet.gameInfo(name)
+        let icon = info.image ? info.image : assets.image`YourGame`
+        gameImages.push(icon)
+        gamePlayers.push(info.players)
+        gameAnimations.push([icon])
     }
-    for (let gli = 0; gli <= gameNames.length - 1; gli++) {
-        tempFoundGame = actualGameList.indexOf(gameNames[gli])
-        if (tempFoundGame < 0) {
-            gameNames[gli] = spriteutils.nullConsts(spriteutils.NullConsts.Undefined)
-        }
+}
+function loadGames () {
+    if (cabinet.debugMode) {
+        loadDebugGames()
+    } else {
+        loadInstalledGames()
     }
+    numberOfRows = Math.ceil(gameImages.length / 2)
 }
 function getGameIndex () {
     if (selection.x - selection.width / 2 == leftColumnLeft) {
@@ -291,6 +308,11 @@ blurbOne = ["These games were created", "by students of the", "\"Make Video Game
 blurbTwo = ["Sign up today!"]
 currentScene = "title"
 rowHeight = 38
+// Debug dataset — the same list-style layout, but baked in so the menu
+// can be edited and previewed in the MakeCode Arcade simulator where
+// the control.* cabinet hooks don't exist. Used when
+// cabinet.debugMode is true.
+function loadDebugGames () {
 // Cover images
 gameImages = [
 assets.image`PaddleIcon`,
@@ -328,13 +350,6 @@ assets.animation`Super Star Story`,
 [assets.image`EliDeathTemple`],
 [assets.image`ScottSaveYourself`],
 [assets.image`YourGame`]
-]
-// Reference images for player count
-gamePlayerImages = [
-assets.image`player1`,
-assets.image`player2`,
-assets.image`player3`,
-assets.image`player4`
 ]
 // Number of players per game (index based)
 gamePlayers = [
@@ -374,13 +389,19 @@ gameNames = [
 "ScottSaveYourself",
 ""
 ]
+}
+// Reference images for the player-count badges (UI art, not per-game data)
+gamePlayerImages = [
+assets.image`player1`,
+assets.image`player2`,
+assets.image`player3`,
+assets.image`player4`
+]
 gameOffsetTop = 40
 leftColumnLeft = 15
 rightColumnLeft = 85
-numberOfRows = Math.ceil(gameImages.length / 2)
 let gameHeight = 34
 gameWidth = 60
-validateGames()
 loadScene()
 game.onUpdateInterval(1000, function () {
     if (currentScene == "title" && game.runtime() - sceneStartTime > sceneChangeTime) {

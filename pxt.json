@@ -11,6 +11,7 @@
     "files": [
         "main.blocks",
         "main.ts",
+        "cabinet.ts",
         "README.md",
         "assets.json",
         "images.g.jres",
